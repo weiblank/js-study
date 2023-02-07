@@ -1,0 +1,72 @@
+<!--
+ * @Author: weiyayun
+ * @Date: 2023-02-06 17:00:28
+ * @Interface: 
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 拷贝的几种方式 -->
+
+<!-- 拓展运算符（...）, Object.assign(), 手写递归， lodash库， JSON.parse() -->
+
+<body>
+    <script>
+        // 检测数据类型的功能函数
+        const checkedType = (target) => Object.prototype.toString.call(target).replace(/\[object (\w+)\]/, "$1").toLowerCase();
+        // 实现深拷贝（Object/Array）
+        const clone = (target, hash = new WeakMap) => {
+            let result;
+            let type = checkedType(target);
+            if (type === 'object') result = {};
+            else if (type === 'array') result = [];
+            else return target;
+            if (hash.get(target)) return target;
+
+            let copyObj = new target.constructor();
+            hash.set(target, copyObj)
+            for (let key in target) {
+                if (checkedType(target[key]) === 'object' || checkedType(target[key]) === 'array') {
+                    result[key] = clone(target[key], hash);
+                } else {
+                    result[key] = target[key];
+                }
+            }
+            return result;
+        }
+        const a = {
+            fn: () => {
+                return 123
+            },
+            strHandle() {
+            },
+            a: 123,
+            b: 2345,
+            d: null,
+            null: 123
+        }
+
+        const arr = [null, 1, 2, 3, [1, 2]]
+        const _arr = [...arr]
+        arr[4][0] = null
+        console.log(_arr, '_arr') // 复杂数组可证明其不是深拷贝
+
+        const _a = clone(a) // 递归实现
+        const __a = JSON.parse(JSON.stringify(a)) // 确定，null, undefined，function等无法复制
+        const ___a = { ...a }
+        a.c = 1
+        console.log(_a, '_a')
+        console.log(__a, '__a')
+        console.log(___a, '___a')
+    </script>
+
+</body>
+
+</html>

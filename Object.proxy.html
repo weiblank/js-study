@@ -1,0 +1,36 @@
+<!--
+ * @Author: weiyayun
+ * @Date: 2023-02-02 19:01:35
+ * @Interface: 
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 可以对目标对象的读取、函数调用等操作进行拦截，然后进行操作处理。它不直接操作对象，而是像代理模式，通过对象的代理对象进行操作，在进行这些操作时，可以添加一些需要的额外操作 -->
+
+<!-- Reflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法， es6中新增的(为了操控对象而新增的api) -->
+
+<body>
+    <script>
+        var obj = new Proxy({}, {
+            get: function (target, key, receiver) {
+                return Reflect.get(target, key, receiver);
+            },
+            set: function (target, key, value, receiver) {
+                return Reflect.set(target, key, value, receiver);
+            }
+        });
+        obj.a = '123'
+        obj.b = '234'
+        console.log(obj, 'obj')
+    </script>
+</body>
+
+</html>

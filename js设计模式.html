@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // ------------------------------------------------------------------------------------工厂模式
+        // 缺点：一次只能创建一个对象
+        const obj1 = {
+            name: 'name',
+            age: 'age'
+        }
+        const obj1_1 = new Object()
+
+        // ------------------------------------------------------------------------------------单例模式（函数内部创建一个新的实例对象，向实例对象上挂载统一属性）
+        // 优点：减小内存开销
+        // 缺点：拓展性差，只能通过修改代码来进行拓展
+        function student(name, age) {
+            var obj = new Object()
+            obj.name = name
+            obj.age = age
+            return obj
+        }
+        var stu1 = student('xiao li', 18)
+        var stu2 = student('xiao yuan', 18)
+        console.log(stu1 instanceof Object)
+
+        // ------------------------------------------------------------------------------------观察者模式（回调函数）
+        // 被观察者通过触发通知（notify）,触发队列中的观察者的update方法，通过回调函数的方式触发观察者
+
+        // 被观察者
+        class Dep {
+            constructor() {
+                this.watchers = [] // 观察者列表，通知的时候要用
+            }
+
+            // 添加观察者
+            addWatcher(watcher) {
+                this.watchers.push(watcher)
+            }
+
+            // 通知所有观察者
+            notify() {
+                this.watchers.forEach(watcher => {
+                    watcher.update()
+                })
+            }
+        }
+
+        // 观察者
+        class Watcher {
+            constructor(callback) {
+                this.callback = callback
+            }
+
+            update() {
+                this.callback()
+            }
+        }
+
+        // 创建被观察者
+        const dep = new Dep()
+
+        // 创建观察者 1，2
+        const watcher1 = new Watcher(() => console.log('1'))
+        const watcher2 = new Watcher(() => console.log('2'))
+
+        // 将观察者加入到被观察者上
+        dep.addWatcher(watcher1)
+        dep.addWatcher(watcher2)
+
+        // 要发新通知了
+        dep.notify()
+
+        setTimeout(() => {
+            dep.notify()
+        }, 2000)
+
+
+        // ------------------------------------------------------------------------------------代理模式（函数的代理）
+        function Mx() {
+            this.sing = function () {
+                console.log("可以开演唱会...");
+            }
+        }
+        function Jjr() {
+            this.sing = function (money) {
+                if (money >= 200000000) {
+                    //通知主人 可以开演唱会啦
+                    new Mx().sing();
+                }
+            }
+        }
+        var jj = new Jjr();
+        jj.sing(200000001);
+
+        // ------------------------------------------------------------------------------------适配器模式(this指向)
+        function Ipad() {
+            this.music = function () {
+                console.log("ipad可以播放音乐");
+            }
+        }
+        //定义一个适配器  判读产品功能
+        function Adapter(pro) {
+            this.pro = pro;//某个商品
+            this.music = function () {
+                if (this.pro.music) {
+                    console.log("可以播放音乐")
+                } else {
+                    console.log("不可以播放音乐")
+                }
+            }
+            this.phone = function () {
+                if (this.pro.phone) {
+                    console.log("可以打电话")
+                } else {
+                    console.log("不可以打电话")
+                }
+            }
+        }
+        var ipad = new Ipad();
+        var adapter = new Adapter(ipad);
+        adapter.music();
+        adapter.phone();
+
+        // ------------------------------------------------------------------------------------策略模式
+
+        function Child(dad, mum) {
+            this.dad = dad;
+            this.mum = mum;
+            this.cry = function () {
+                //小孩哭了  通知 爸爸 开始冲奶了
+                this.dad.weinai();
+            }
+
+            //观察者模式（异步现象）
+            setTimeout(function () {
+                this.cry();
+                console.log(123)
+            }.bind(this), Math.random() * 5000 + 200)
+        }
+
+        function Dad() {
+            this.weinai = function () {
+                console.log("开始给孩子喂奶了");
+            }
+        }
+
+        var dad = new Dad();
+        var ch = new Child(dad, null);
+
+    </script>
+</body>
+
+</html>

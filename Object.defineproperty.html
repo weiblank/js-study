@@ -1,0 +1,48 @@
+<!--
+ * @Author: weiyayun
+ * @Date: 2023-02-02 19:07:26
+ * @Interface: 
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 它是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性。 -->
+
+<body>
+    <div>
+        <input id="myInput" type="text" />
+        <div id="contain"></div>
+    </div>
+    <script>
+        var book = {
+            _year: 2004,
+            edition: 1
+        }
+
+        Object.defineProperty(book, "year", {
+            get: function () {
+                return this._year
+            },
+            set: function (newYear) {
+                if (newYear > 2004) {
+                    this._year = newYear;
+                    this.edition += newYear - 2004
+                }
+            }
+        })
+
+        book.year = 2005;
+        console.log(book.edition); // 2
+        console.log(book._year); //2005
+
+    </script>
+</body>
+
+</html>l

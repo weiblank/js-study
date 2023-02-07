@@ -1,0 +1,46 @@
+<!--
+ * @Author: weiyayun
+ * @Date: 2023-02-01 18:46:50
+ * @Interface: 
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!-- 函数只有prototype，对象只有__proto__ -->
+
+<body>
+    <script>
+        function GoodFriend() {
+            this.name = "三三";
+        }
+
+        const obj = {
+            age: '123'
+        }
+
+        // 向对象的隐式原型上新增参数 
+        obj.__proto__ = {
+            height: 180
+        }
+
+        // 将构造函数的显式原型指向obj
+        GoodFriend.prototype = obj
+
+        // 实例化构造函数
+        const goodFriend = new GoodFriend()
+        // 构造函数的显式原型的constructor和实例化后的对象的隐式原型的constructor指向相同
+        console.log(GoodFriend.prototype.constructor === goodFriend.__proto__.constructor)
+        // 首先从对象查找height属性，查不到继续向对象的__proto__上查找
+        console.log(goodFriend.age)
+    </script>
+</body>
+
+</html>

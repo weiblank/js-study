@@ -1,0 +1,46 @@
+<!--
+ * @Author: weiyayun
+ * @Date: 2023-02-01 18:55:43
+ * @Interface: 
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!--
+1、都是用来改变函数的this对象的指向的。
+2、第一个参数都是this要指向的对象（想用哪个对象上的属性就指向谁）。
+3、都可以利用后续参数传参。
+ -->
+
+<body>
+    <script>
+        const zs = {
+            name: 'zs',
+            age: 18,
+            gender: '男',
+            say(school) {
+                console.log('我是' + this.name + '今年' + this.age, '在' + school + '上学')
+            }
+        }
+        const ls = {
+            name: 'ls',
+            age: 18,
+            gender: '女'
+        }
+        // 后续的参数个数，按顺序分别匹配say中的参数个数
+        zs.say.call(ls, '淮南二中') // 函数的直接调用，参数为字符串
+        zs.say.apply(ls, ['淮南一中']) // 函数的直接调用，参数为数组
+        zs.say.bind(ls)('凤台一中') // 返回的是函数
+
+    </script>
+</body>
+
+</html>
