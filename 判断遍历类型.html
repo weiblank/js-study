@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 原理： -->
+<!-- 通过重写toString方法，改变this指向 -->
+<!-- 在调用Object.prototype.toString时，会生成【Object ele】其中ele代表真实的数据类型，并且依次遍历ele上的属性 -->
+
+<body>
+    <script>
+        // call.apply都行
+        console.log(Object.prototype.toString.call('1')); // String
+        console.log(Object.prototype.toString.call(1)); // Number
+        console.log(Object.prototype.toString.call(null)); // Null
+        console.log(Object.prototype.toString.call([])); // Array
+        console.log(Object.prototype.toString.call({})); // Object
+        console.log(Object.prototype.toString.call(Math)); // Math
+        console.log(Object.prototype.toString.call(undefined)); // Undefined
+        console.log(Object.prototype.toString.call(Symbol));  // Function
+    </script>
+</body>
+
+</html>
