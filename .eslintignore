@@ -1,0 +1,7 @@
+.eslintrc.js
+auto_add_version.js
+tsconfig.json
+webpack.config.js
+.husky
+dist
+node_modules

@@ -4,18 +4,30 @@
  * @Interface:
  * @Description:
  */
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
-  entry: "./src",
-  mode: "development",
+  entry: './src/index',
+  mode: 'development',
   module: {
-    rules: [],
+    rules: []
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'yywei',
+      filename: 'html/index.html',
+      template: 'src/Html/index.html',
+      inject: true
+    })
+  ],
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "static/js/main.js",
-    clean: true,
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'static/js/main.js',
+    clean: true
   },
-};
+  devServer: {
+    static: 'dist/html/index.html',
+    compress: true,
+    port: 9000
+  }
+}
